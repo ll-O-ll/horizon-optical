@@ -7,11 +7,40 @@ const NHOST_GRAPHQL_URL = NHOST_SUBDOMAIN === 'local'
   ? 'https://local.graphql.nhost.run/v1'
   : `https://${NHOST_SUBDOMAIN}.graphql.${NHOST_REGION}.nhost.run/v1`;
 
-export const nhostGraphqlClient = new GraphQLClient(NHOST_GRAPHQL_URL, {
+export function isNhostEnabled(): boolean {
+  if (process.env.DISABLE_NHOST === 'true') {
+    return false;
+  }
+  const subdomain = process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN;
+  const adminSecret = process.env.NHOST_ADMIN_SECRET;
+  
+  // Only enable Nhost if custom subdomain and admin secret are explicitly provided
+  if (subdomain && subdomain !== 'local' && adminSecret && adminSecret.trim() !== '') {
+    return true;
+  }
+  return false;
+}
+
+const baseClient = new GraphQLClient(NHOST_GRAPHQL_URL, {
   headers: {
     'x-hasura-admin-secret': process.env.NHOST_ADMIN_SECRET || '',
   },
 });
+
+export const nhostGraphqlClient = new Proxy(baseClient, {
+  get(target, prop, receiver) {
+    if (prop === 'request') {
+      return async function (...args: any[]) {
+        if (!isNhostEnabled()) {
+          throw new Error("Nhost connection is paused or disabled in configuration.");
+        }
+        return (target.request as any)(...args);
+      };
+    }
+    return Reflect.get(target, prop, receiver);
+  }
+});
+
 
 export interface BookingEvent {
   id?: string;

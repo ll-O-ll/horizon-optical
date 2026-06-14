@@ -7,7 +7,7 @@ import { BookingEvent, insertBookings } from "@/lib/nhost"
 import { generateReceipt } from "@/lib/generate-receipt"
 
 const TIMEZONE = "America/New_York"
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = new Resend(process.env.RESEND_API_KEY || "re_1234567890abcdef")
 
 export interface SlotData {
     startTime: string

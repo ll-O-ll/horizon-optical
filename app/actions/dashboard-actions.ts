@@ -7,7 +7,7 @@ import { Resend } from "resend"
 import { formatInTimeZone } from "date-fns-tz"
 
 const TIMEZONE = "America/New_York"
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = new Resend(process.env.RESEND_API_KEY || "re_1234567890abcdef")
 
 /**
  * Send an SMS via Textbelt.

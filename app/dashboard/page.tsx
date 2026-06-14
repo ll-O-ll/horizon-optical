@@ -26,6 +26,7 @@ import { AddBookingDialog } from "@/components/admin/add-booking-dialog"
 import { EditBookingDialog } from "@/components/admin/edit-booking-dialog"
 import { ManageResourcesTab } from "@/components/admin/manage-resources-tab"
 import { ManageTimetableTab } from "@/components/admin/manage-timetable-tab"
+import { ManageShowcaseTab } from "@/components/admin/manage-showcase-tab"
 import { Trash2, Edit } from "lucide-react"
 
 const TIMEZONE = "America/New_York"
@@ -113,8 +114,8 @@ export default function DashboardPage() {
             </div>
 
             <main className="max-w-7xl mx-auto p-4 sm:p-8">
-                <h1 className="text-3xl font-serif font-bold mb-2">Clinic Dashboard</h1>
-                <p className="text-muted-foreground mb-8">Manage calendar, patient appointments, and payments.</p>
+                <h1 className="text-3xl font-serif font-bold mb-2">Horizon Optical Admin Portal</h1>
+                <p className="text-muted-foreground mb-8">Manage designer showcase, patient appointments, and clinic schedules.</p>
 
                 <div className="grid gap-6 md:grid-cols-3 mb-8">
                     <Card className="bg-primary/5 border-primary/20">
@@ -159,8 +160,9 @@ export default function DashboardPage() {
                     </Card>
                 </div>
 
-                <Tabs defaultValue="overview" className="space-y-4">
-                    <TabsList className="grid w-full grid-cols-4">
+                <Tabs defaultValue="showcase" className="space-y-4">
+                    <TabsList className="grid w-full grid-cols-5">
+                        <TabsTrigger value="showcase">Showcase Customizer</TabsTrigger>
                         <TabsTrigger value="overview">Overview</TabsTrigger>
                         <TabsTrigger value="schedule">Schedule</TabsTrigger>
                         <TabsTrigger value="timetable">Timetable</TabsTrigger>
@@ -321,6 +323,10 @@ export default function DashboardPage() {
 
                     <TabsContent value="resources">
                         <ManageResourcesTab />
+                    </TabsContent>
+
+                    <TabsContent value="showcase">
+                        <ManageShowcaseTab />
                     </TabsContent>
                 </Tabs>
 

@@ -4,7 +4,7 @@ import { nhostGraphqlClient } from "@/lib/nhost"
 import { revalidatePath } from "next/cache"
 import { Resend } from "resend"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = new Resend(process.env.RESEND_API_KEY || "re_1234567890abcdef")
 
 export interface ClientResource {
   id: string

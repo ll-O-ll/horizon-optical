@@ -5,7 +5,7 @@ import { cookies } from "next/headers"
 import { Resend } from "resend"
 import bcrypt from "bcryptjs"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = new Resend(process.env.RESEND_API_KEY || "re_1234567890abcdef")
 
 // Attempt portal login with email and a static password
 export async function loginToPortal(email: string, password: string): Promise<{ success: boolean; error?: string }> {
