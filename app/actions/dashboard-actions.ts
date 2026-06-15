@@ -194,7 +194,12 @@ export async function updatePaymentStatus(id: string, newPaymentStatus: string) 
       }
 
       // 2. Schedule new reminders with "confirmed" messaging
-      const sessionLabel = ({ workout: "Workout", therapy: "Therapy", combo: "Workout / Therapy" } as Record<string, string>)[booking.session_type] ?? booking.session_type
+      const sessionLabel = ({
+        exam: "Comprehensive Eye Exam",
+        lens: "CL Fitting",
+        adjustment: "Glasses Adjustment",
+        styling: "Bespoke Frame Styling"
+      } as Record<string, string>)[booking.session_type] ?? booking.session_type
       const ft = formatInTimeZone(new Date(booking.start_time), TIMEZONE, "EEEE, MMMM d 'at' h:mm a") + " ET"
 
       const confirmedReminderHtml = `
@@ -319,7 +324,12 @@ export async function createAdminBooking(data: {
     if (data.clientEmail?.includes("@")) {
       const startMs = new Date(data.startTime).getTime()
       const ft = formatInTimeZone(new Date(data.startTime), TIMEZONE, "EEEE, MMMM d, yyyy 'at' h:mm a") + " ET"
-      const sessionLabel = ({ workout: "Workout", therapy: "Therapy", combo: "Workout / Therapy" })[data.sessionType] ?? data.sessionType
+      const sessionLabel = ({
+        exam: "Comprehensive Eye Exam",
+        lens: "CL Fitting",
+        adjustment: "Glasses Adjustment",
+        styling: "Bespoke Frame Styling"
+      } as Record<string, string>)[data.sessionType] ?? data.sessionType
 
       const reminderHtml = `
             <div style="font-family:sans-serif;max-width:600px;color:#1c2834;">
@@ -488,7 +498,12 @@ export async function updateBookingDetails(id: string, data: {
     }
 
     // --- Send Email Notifications for Update ---
-    const sessionLabel = ({ workout: "Workout", therapy: "Therapy", combo: "Workout / Therapy" })[data.sessionType] ?? data.sessionType
+    const sessionLabel = ({
+      exam: "Comprehensive Eye Exam",
+      lens: "CL Fitting",
+      adjustment: "Glasses Adjustment",
+      styling: "Bespoke Frame Styling"
+    } as Record<string, string>)[data.sessionType] ?? data.sessionType
     const ft = formatInTimeZone(new Date(data.startTime), TIMEZONE, "EEEE, MMMM d, yyyy 'at' h:mm a") + " ET"
 
     // Generate new ICS for the updated time

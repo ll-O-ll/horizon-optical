@@ -31,21 +31,14 @@ const SERVICES = {
         id: "exam",
         title: "Comprehensive Eye Exam",
         desc: "State-of-the-art diagnostic vision test and health examination.",
-        price: 125,
+        price: 105,
         duration: "60 mins"
-    },
-    styling: {
-        id: "styling",
-        title: "Bespoke Frame Styling",
-        desc: "1-on-1 style and shape consultation with our certified optician.",
-        price: 0,
-        duration: "30 mins"
     },
     lens: {
         id: "lens",
-        title: "Contact Lens Fitting",
+        title: "CL Fitting",
         desc: "Curvature sizing, astigmatism/multifocal fitting, and trial lenses.",
-        price: 90,
+        price: 30,
         duration: "45 mins"
     },
     adjustment: {
@@ -60,13 +53,11 @@ const SERVICES = {
 function BookingContent() {
     const searchParams = useSearchParams()
     const queryType = searchParams.get("type")
-    const initialService = queryType === "styling" 
-        ? "styling" 
-        : queryType === "lens" 
-            ? "lens" 
-            : queryType === "adjustment" 
-                ? "adjustment" 
-                : "exam"
+    const initialService = queryType === "lens" 
+        ? "lens" 
+        : queryType === "adjustment" 
+            ? "adjustment" 
+            : "exam"
 
     // Step 1: Selected Service
     const [selectedService, setSelectedService] = useState<string>(initialService)
@@ -270,7 +261,7 @@ function BookingContent() {
                                 <Card className="border-border bg-card shadow-sm">
                                     <CardHeader>
                                         <CardTitle className="font-serif text-2xl font-bold">Select Appointment Type</CardTitle>
-                                        <CardDescription className="font-light">What kind of clinical or fashion styling appointment would you like to book?</CardDescription>
+                                        <CardDescription className="font-light">What kind of clinical or glasses adjustment appointment would you like to book?</CardDescription>
                                     </CardHeader>
                                     <CardContent>
                                         <RadioGroup value={selectedService} onValueChange={val => { setSelectedService(val); setSelectedSlots([]) }} className="grid gap-4">
@@ -482,7 +473,7 @@ function BookingContent() {
                                                 <div className="flex items-start gap-3 bg-primary/5 border border-primary/20 p-4 rounded-xl text-sm leading-relaxed">
                                                     <Sparkles className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                                                     <p className="text-muted-foreground font-light">
-                                                        No deposit or credit card details are required for this styling/adjustment visit. Simply click below to confirm your spot in our calendar system.
+                                                        No deposit or credit card details are required for this adjustment visit. Simply click below to confirm your spot in our calendar system.
                                                     </p>
                                                 </div>
                                                 <Button onClick={handleCompleteBooking} disabled={isLoading} className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-medium rounded-full h-11">

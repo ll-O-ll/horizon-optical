@@ -254,6 +254,20 @@ const DEFAULT_BRAND_MODELS: Record<string, {
       { name: "Signature Canvas Rect", code: "HC6143", image: "/images/glasses-wayfarer.png", shape: "Rectangular", material: "Engraved Acetate", fit: "Round, Heart faces" },
       { name: "Rose Gold Wire", code: "HC5113", image: "/images/glasses-aviator.png", shape: "Round", material: "Rose Gold Metal", fit: "Oval, Square faces" }
     ]
+  },
+  "PRADA": {
+    bio: "Sophisticated Italian luxury and avant-garde designs. Prada frames feature refined geometric shapes, clean lines, and the iconic triangle emblem.",
+    models: [
+      { name: "Prada Runway Square", code: "PR17WS", image: "/images/glasses-wayfarer.png", shape: "Square", material: "Premium Acetate", fit: "Round, Oval faces" },
+      { name: "Linear Carbon Aviator", code: "PR54YS", image: "/images/glasses-aviator.png", shape: "Aviator", material: "Metal & Carbon Fiber", fit: "Square, Heart faces" }
+    ]
+  },
+  "Timberland": {
+    bio: "Rugged durability meets environmental responsibility. Timberland frames feature Earthkeepers bio-based materials and outdoor-ready active designs.",
+    models: [
+      { name: "Active Outdoor Rectangle", code: "TB1642", image: "/images/glasses-wayfarer.png", shape: "Rectangular", material: "Bio-based Acetate", fit: "Round, Oval faces" },
+      { name: "Classic Navigator Wire", code: "TB9190", image: "/images/glasses-aviator.png", shape: "Aviator", material: "Recycled Metal", fit: "Square, Heart faces" }
+    ]
   }
 };
 
@@ -289,6 +303,20 @@ export default function LandingPage() {
     }
     loadShowcase()
   }, [])
+
+  useEffect(() => {
+    if (selectedBrand) {
+      const isMobile = window.innerWidth < 768
+      if (isMobile) {
+        document.body.style.overflow = "hidden"
+      }
+    } else {
+      document.body.style.overflow = ""
+    }
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [selectedBrand])
 
   useEffect(() => {
     const checkStoreStatus = () => {
@@ -420,8 +448,8 @@ export default function LandingPage() {
 
             <div className="flex items-center gap-8">
               <div className="hidden md:flex items-center gap-8">
-                <Link href="#philosophy" className="text-sm font-medium transition-colors tracking-wide text-muted-foreground hover:text-primary">
-                  Philosophy
+                <Link href="/about" className="text-sm font-medium transition-colors tracking-wide text-muted-foreground hover:text-primary">
+                  About Us
                 </Link>
                 <Link href="#services" className="text-sm font-medium transition-colors tracking-wide text-muted-foreground hover:text-primary">
                   Services
@@ -465,11 +493,11 @@ export default function LandingPage() {
             >
               <div className="space-y-2 px-4 py-6">
                 <Link
-                  href="#philosophy"
+                  href="/about"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="block py-2 text-base font-medium text-muted-foreground hover:text-primary transition-colors"
                 >
-                  Philosophy
+                  About Us
                 </Link>
                 <Link
                   href="#services"
@@ -499,6 +527,29 @@ export default function LandingPage() {
                     </Link>
                   </Button>
                 </div>
+                
+                <div className="pt-6 border-t border-border/60 mt-4 space-y-3 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2.5">
+                    <Clock className="h-4 w-4 text-primary shrink-0" />
+                    <div>
+                      <span className="font-medium text-foreground">Hours: </span>
+                      <span>{currentHoursText}</span>
+                      <span className="inline-flex items-center gap-1.5 ml-2">
+                        <span className={`h-1.5 w-1.5 rounded-full ${isOpen ? "bg-emerald-500 animate-pulse" : "bg-rose-500"}`} />
+                        <span className={`${isOpen ? "text-emerald-600 dark:text-emerald-400" : "text-rose-500"} font-bold text-xs`}>
+                          {isOpen ? "Open Now" : "Closed"}
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <MapPin className="h-4 w-4 text-primary shrink-0" />
+                    <div>
+                      <span className="font-medium text-foreground">Location: </span>
+                      <span>7985 Financial Dr. Unit 2A, Brampton</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.div>
           )}
@@ -506,7 +557,7 @@ export default function LandingPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-40 pb-20 lg:pt-52 lg:pb-32 overflow-hidden px-4">
+      <section className="relative pt-56 pb-20 lg:pt-52 lg:pb-32 overflow-hidden px-4">
         {/* Abstract design elements */}
         <div className="absolute top-20 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
         <div className="absolute bottom-10 left-10 w-80 h-80 bg-accent/5 rounded-full blur-3xl -z-10"></div>
@@ -612,7 +663,9 @@ export default function LandingPage() {
                   <span className="font-sans font-black italic tracking-tighter uppercase text-sm">OAKLEY</span>
                   <span className="font-sans font-light tracking-[0.05em] uppercase text-[8px] bg-primary/10 text-primary px-1 py-0.5 rounded-sm">META</span>
                 </div>
-              ) }
+              ) },
+              { name: "PRADA", element: <span className="font-serif font-normal tracking-[0.35em] uppercase text-xs">PRADA</span> },
+              { name: "Timberland", element: <span className="font-sans font-extrabold tracking-[0.15em] uppercase text-xs">Timberland</span> }
             ].map((brand, index) => (
               <div
                 key={index}
@@ -675,19 +728,33 @@ export default function LandingPage() {
                     <span className="font-sans font-black italic tracking-tighter uppercase text-sm">OAKLEY</span>
                     <span className="font-sans font-light tracking-[0.05em] uppercase text-[8px] bg-primary/10 text-primary px-1 py-0.5 rounded-sm">META</span>
                   </div>
-                ) }
+                ) },
+                { name: "PRADA", element: <span className="font-serif font-normal tracking-[0.35em] uppercase text-xs">PRADA</span> },
+                { name: "Timberland", element: <span className="font-sans font-extrabold tracking-[0.15em] uppercase text-xs">Timberland</span> }
               ].find(b => b.name === selectedBrand);
 
               return (
                 <motion.div
                   key={selectedBrand}
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.35, ease: "easeInOut" }}
-                  className="mt-12 overflow-hidden"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                  onClick={(e) => {
+                    if (e.target === e.currentTarget) {
+                      setSelectedBrand(null)
+                    }
+                  }}
+                  className="fixed inset-0 z-50 bg-black/65 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto md:relative md:inset-auto md:z-auto md:bg-transparent md:backdrop-blur-none md:p-0 md:mt-12 md:overflow-visible md:block md:pointer-events-none"
                 >
-                  <Card className="border border-primary/20 bg-card p-6 sm:p-8 shadow-lg shadow-accent/5">
+                  <Card className="relative border border-primary/20 bg-card p-6 sm:p-8 shadow-2xl shadow-accent/5 w-full max-w-5xl max-h-[85vh] overflow-y-auto md:max-h-none md:overflow-visible md:shadow-lg md:rounded-3xl pointer-events-auto rounded-2xl">
+                    <button
+                      onClick={() => setSelectedBrand(null)}
+                      className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors z-10"
+                      aria-label="Close details"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-border/60 pb-6 mb-8">
                       <div className="space-y-1">
                         <span className="text-xs font-semibold tracking-wider text-primary uppercase">Designer Showcase</span>
@@ -752,15 +819,6 @@ export default function LandingPage() {
                               </div>
                             </div>
                           </div>
-
-                          {/* Model CTA */}
-                          <div className="mt-6">
-                            <Button asChild className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-full text-xs h-9">
-                              <Link href={`/booking?type=styling&brand=${encodeURIComponent(selectedBrand)}&model=${encodeURIComponent(model.name)}`}>
-                                Inquire / Try On In-Store
-                              </Link>
-                            </Button>
-                          </div>
                         </Card>
                       ))}
                     </div>
@@ -772,29 +830,18 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Philosophy Section */}
-      <section id="philosophy" className="py-32 bg-secondary/30 px-4 border-y border-border">
-        <div className="mx-auto max-w-4xl text-center">
-          <motion.div {...fadeInUp} className="space-y-8">
-            <h2 className="font-serif text-3xl font-bold sm:text-4xl text-foreground">The Philosophy</h2>
-            <div className="flex justify-center"><div className="h-0.5 w-16 bg-primary rounded"></div></div>
-            <p className="text-xl text-muted-foreground leading-relaxed font-light">
-              We believe glasses are more than just utility. They are a prominent expression of your character and style. By marrying <span className="text-primary font-medium">precision optometry</span> with luxury curated eyewear designers, we provide a sight assessment and aesthetic fitting that ensures you see—and are seen—with absolute clarity.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+
 
       {/* Services Section */}
-      <section id="services" className="py-24 px-4 bg-background">
+      <section id="services" className="pt-24 pb-12 px-4 bg-background">
         <div className="mx-auto max-w-7xl">
           <motion.div {...fadeInUp} className="mb-20 text-center">
-            <h2 className="font-serif text-3xl font-bold sm:text-4xl">Clinical & Design Services</h2>
+            <h2 className="font-serif text-3xl font-bold sm:text-4xl">Clinical & Care Services</h2>
             <div className="flex justify-center mt-4"><div className="h-0.5 w-12 bg-primary rounded"></div></div>
-            <p className="mt-4 text-lg text-muted-foreground font-light">Experience comprehensive care and tailored styles under one roof.</p>
+            <p className="mt-4 text-lg text-muted-foreground font-light">Experience comprehensive vision care and frame adjustments under one roof.</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Eye Exam */}
             <motion.div {...fadeInUp} transition={{ delay: 0.1 }}>
               <Card className="p-8 border-border bg-card hover:border-primary/50 transition-colors h-full flex flex-col shadow-sm">
@@ -803,7 +850,7 @@ export default function LandingPage() {
                     <Eye className="h-6 w-6" />
                   </div>
                   <h3 className="text-2xl font-bold font-serif mb-2">Comprehensive Eye Exam</h3>
-                  <div className="text-3xl font-bold text-primary">$125</div>
+                  <div className="text-3xl font-bold text-primary">$105</div>
                   <p className="mt-4 text-muted-foreground">Detailed evaluation of visual acuity, refractive status, and ocular health using premium clinical technologies.</p>
                 </div>
                 <ul className="space-y-4 mb-8 flex-1">
@@ -826,49 +873,15 @@ export default function LandingPage() {
               </Card>
             </motion.div>
 
-            {/* Frame Styling */}
-            <motion.div {...fadeInUp} transition={{ delay: 0.2 }}>
-              <Card className="p-8 border-primary bg-card shadow-lg shadow-accent/5 relative h-full flex flex-col">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white px-4 py-1 rounded-full text-xs font-medium tracking-wide">
-                  RECOMMENDED
-                </div>
-                <div className="mb-6">
-                  <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
-                    <Sparkles className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-2xl font-bold font-serif mb-2">Bespoke Frame Styling</h3>
-                  <div className="text-3xl font-bold text-primary">Complimentary</div>
-                  <p className="mt-4 text-muted-foreground">1-on-1 styling consultation with our certified optical stylists. Find frames that perfectly complement your face shape and aesthetic.</p>
-                </div>
-                <ul className="space-y-4 mb-8 flex-1">
-                  <li className="flex items-center gap-3 text-sm">
-                    <Check className="h-5 w-5 text-primary shrink-0" />
-                    <span>Personalized style & shape consultation</span>
-                  </li>
-                  <li className="flex items-center gap-3 text-sm">
-                    <Check className="h-5 w-5 text-primary shrink-0" />
-                    <span>Access to limited edition boutique designers</span>
-                  </li>
-                  <li className="flex items-center gap-3 text-sm">
-                    <Check className="h-5 w-5 text-primary shrink-0" />
-                    <span>Included with any frame purchase</span>
-                  </li>
-                </ul>
-                <Button asChild className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20">
-                  <Link href="/booking?type=styling">Schedule Session</Link>
-                </Button>
-              </Card>
-            </motion.div>
-
             {/* Contact Lens */}
-            <motion.div {...fadeInUp} transition={{ delay: 0.3 }}>
+            <motion.div {...fadeInUp} transition={{ delay: 0.2 }}>
               <Card className="p-8 border-border bg-card hover:border-primary/50 transition-colors h-full flex flex-col shadow-sm">
                 <div className="mb-6">
                   <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
                     <ShieldCheck className="h-6 w-6" />
                   </div>
-                  <h3 className="text-2xl font-bold font-serif mb-2">Contact Lens Fitting</h3>
-                  <div className="text-3xl font-bold text-primary">$90</div>
+                  <h3 className="text-2xl font-bold font-serif mb-2">CL Fitting</h3>
+                  <div className="text-3xl font-bold text-primary">$30</div>
                   <p className="mt-4 text-muted-foreground">Sizing, design selection, and trial application for soft, astigmatism, or multifocal contact lenses.</p>
                 </div>
                 <ul className="space-y-4 mb-8 flex-1">
@@ -886,13 +899,13 @@ export default function LandingPage() {
                   </li>
                 </ul>
                 <Button asChild variant="outline" className="w-full border-primary/20 hover:bg-primary hover:text-primary-foreground">
-                  <Link href="/booking?type=lens">Book Assessment</Link>
+                  <Link href="/booking?type=lens">Book Fitting</Link>
                 </Button>
               </Card>
             </motion.div>
 
             {/* Adjustments */}
-            <motion.div {...fadeInUp} transition={{ delay: 0.4 }}>
+            <motion.div {...fadeInUp} transition={{ delay: 0.3 }}>
               <Card className="p-8 border-border bg-card hover:border-primary/50 transition-colors h-full flex flex-col shadow-sm">
                 <div className="mb-6">
                   <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
@@ -932,7 +945,7 @@ export default function LandingPage() {
 
 
       {/* Customer Reviews Section */}
-      <section className="py-24 px-4 bg-background">
+      <section className="pt-12 pb-24 px-4 bg-background">
         <div className="mx-auto max-w-7xl">
           <motion.div {...fadeInUp} className="mb-16 text-center">
             <h2 className="font-serif text-3xl font-bold sm:text-4xl">Client Stories</h2>

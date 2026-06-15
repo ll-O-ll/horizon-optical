@@ -110,7 +110,7 @@ export async function handleBookingSubmit(data: BookingData) {
     const labelsMap: Record<string, string> = {
         exam: "Comprehensive Eye Exam",
         styling: "Bespoke Frame Styling",
-        lens: "Contact Lens Fitting",
+        lens: "CL Fitting",
         adjustment: "Glasses Adjustment"
     }
     

@@ -37,7 +37,7 @@ export function AddBookingDialog({ onBookingAdded }: { onBookingAdded: () => voi
         date: "",
         startTime: "",
         endTime: "",
-        serviceType: "assessment",
+        serviceType: "exam",
         sessionType: "in-person"
     })
 
@@ -162,10 +162,9 @@ export function AddBookingDialog({ onBookingAdded }: { onBookingAdded: () => voi
                                         <SelectValue placeholder="Select service" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="assessment">Assessment ($125)</SelectItem>
-                                        <SelectItem value="individual">Individual Session ($125)</SelectItem>
-                                        <SelectItem value="transformation">Transformation Pack</SelectItem>
-                                        <SelectItem value="warrior">Warrior Pack</SelectItem>
+                                        <SelectItem value="exam">Eye Exam ($105)</SelectItem>
+                                        <SelectItem value="lens">CL Fitting ($30)</SelectItem>
+                                        <SelectItem value="adjustment">Glasses Adjustment (Free)</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>

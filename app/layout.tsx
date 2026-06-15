@@ -18,7 +18,7 @@ const spectral = Spectral({
 export const metadata: Metadata = {
   title: "Horizon Optical | Premium Eyewear & Vision Care",
   description:
-    "Discover curated designer eyewear, bespoke frame styling, and state-of-the-art eye examinations at Horizon Optical.",
+    "Discover curated designer eyewear, custom prescription lenses, and state-of-the-art eye examinations at Horizon Optical.",
   generator: "v0.app",
   icons: {
     icon: "/images/favicon.png",
