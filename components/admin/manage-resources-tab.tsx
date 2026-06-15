@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import {
   Video,
-  Target,
+  BookOpen,
   FileText,
   MoreHorizontal,
   Edit,
@@ -30,7 +30,6 @@ import {
   Users,
   ChevronUp,
   ChevronDown,
-  Copy,
   Link2,
   Bell,
   Loader2,
@@ -169,19 +168,39 @@ export function ManageResourcesTab() {
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case "recording": return <Video className="h-4 w-4 text-blue-400" />
-      case "pointer": return <Target className="h-4 w-4 text-amber-400" />
-      case "note": return <FileText className="h-4 w-4 text-emerald-400" />
+      case "recording": return <Video className="h-4 w-4 text-blue-500" />
+      case "pointer": return <BookOpen className="h-4 w-4 text-amber-500" />
+      case "note": return <FileText className="h-4 w-4 text-emerald-500" />
       default: return null
     }
   }
 
-  const getTypeBadgeColor = (type: string) => {
+  const getTypeBadge = (type: string) => {
     switch (type) {
-      case "recording": return "bg-blue-500/10 text-blue-400 hover:bg-blue-500/20"
-      case "pointer": return "bg-amber-500/10 text-amber-400 hover:bg-amber-500/20"
-      case "note": return "bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20"
-      default: return ""
+      case "recording":
+        return (
+          <Badge variant="outline" className="bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20 px-2 py-0.5 rounded-full text-[10px] font-semibold">
+            Video Guide
+          </Badge>
+        )
+      case "pointer":
+        return (
+          <Badge variant="outline" className="bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20 px-2 py-0.5 rounded-full text-[10px] font-semibold">
+            Care Guideline
+          </Badge>
+        )
+      case "note":
+        return (
+          <Badge variant="outline" className="bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20 px-2 py-0.5 rounded-full text-[10px] font-semibold">
+            Clinical Note
+          </Badge>
+        )
+      default:
+        return (
+          <Badge variant="outline" className="bg-muted text-muted-foreground px-2 py-0.5 rounded-full text-[10px] font-semibold">
+            {type}
+          </Badge>
+        )
     }
   }
 
@@ -194,7 +213,7 @@ export function ManageResourcesTab() {
 
   // Group resources by category
   const grouped = resources.reduce<Record<string, ClientResource[]>>((acc, r) => {
-    const cat = r.category || "Uncategorized"
+    const cat = r.category || "General Materials"
     if (!acc[cat]) acc[cat] = []
     acc[cat].push(r)
     return acc
@@ -203,24 +222,24 @@ export function ManageResourcesTab() {
   return (
     <div className="space-y-6">
       {/* Client Selector + Actions */}
-      <Card className="border-border bg-card">
-        <CardHeader>
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <Card className="border-border bg-card shadow-sm">
+        <CardHeader className="pb-4 border-b border-border/60">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-xl font-serif">
                 <Users className="h-5 w-5 text-primary" />
-                Client Resources
+                Patient Resources
               </CardTitle>
               <CardDescription className="mt-1">
-                Manage recordings, pointers, and notes for each client.
+                Distribute and organize instructional video guides, hygiene recommendations, and clinical notes for patient portals.
               </CardDescription>
             </div>
-            <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="flex items-center gap-2 flex-shrink-0 w-full md:w-auto">
               {selectedEmail && resources.length > 0 && (
                 <Button
                   variant="outline"
                   size="sm"
-                  className="gap-2"
+                  className="gap-2 rounded-full border-border/80 h-9 font-medium shadow-sm flex-1 md:flex-none justify-center"
                   onClick={handleNotifyClient}
                   disabled={isSendingNotification}
                   title="Send email notification to client about their latest resource"
@@ -230,22 +249,23 @@ export function ManageResourcesTab() {
                   ) : (
                     <Bell className="h-4 w-4" />
                   )}
-                  Notify Client
+                  Notify Patient
                 </Button>
               )}
-              <Button variant="outline" size="sm" className="gap-2" onClick={handleCopyPortalLink}>
+              <Button variant="outline" size="sm" className="gap-2 rounded-full border-border/80 h-9 font-medium shadow-sm flex-1 md:flex-none justify-center" onClick={handleCopyPortalLink}>
                 <Link2 className="h-4 w-4" />
-                Copy Portal Link
+                Portal Link
               </Button>
             </div>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
             <div className="flex-1 w-full sm:max-w-xs">
+              <Label htmlFor="client-select" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground block mb-2">Select Clinic Patient</Label>
               <Select value={selectedEmail} onValueChange={setSelectedEmail}>
-                <SelectTrigger id="client-select">
-                  <SelectValue placeholder="Select a client..." />
+                <SelectTrigger id="client-select" className="h-10 rounded-lg">
+                  <SelectValue placeholder="Search/select patient..." />
                 </SelectTrigger>
                 <SelectContent>
                   {clients.map((client) => (
@@ -257,10 +277,12 @@ export function ManageResourcesTab() {
               </Select>
             </div>
             {selectedEmail && (
-              <AddResourceDialog
-                clientEmail={selectedEmail}
-                onResourceAdded={fetchResources}
-              />
+              <div className="pt-6 sm:pt-0">
+                <AddResourceDialog
+                  clientEmail={selectedEmail}
+                  onResourceAdded={fetchResources}
+                />
+              </div>
             )}
           </div>
         </CardContent>
@@ -268,58 +290,66 @@ export function ManageResourcesTab() {
 
       {/* Resources List */}
       {!selectedEmail ? (
-        <div className="min-h-[300px] flex items-center justify-center border rounded-lg bg-card/50 border-dashed">
-          <div className="text-center">
-            <Users className="h-12 w-12 text-muted-foreground/40 mx-auto mb-3" />
-            <p className="text-muted-foreground">Select a client to manage their resources</p>
+        <div className="min-h-[300px] flex items-center justify-center border border-dashed rounded-xl bg-muted/5 border-border/80">
+          <div className="text-center p-6">
+            <Users className="h-12 w-12 text-muted-foreground/30 mx-auto mb-3" />
+            <h4 className="font-semibold text-foreground mb-1">No Patient Selected</h4>
+            <p className="text-sm text-muted-foreground max-w-sm">Choose a patient from the list above to curate their prescription notes, training videos, and care instructions.</p>
           </div>
         </div>
       ) : isLoading ? (
-        <div className="min-h-[200px] flex items-center justify-center">
-          <p className="text-muted-foreground">Loading resources...</p>
+        <div className="min-h-[250px] flex items-center justify-center bg-card rounded-xl border border-border/60 shadow-sm">
+          <div className="text-center">
+            <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto mb-3" />
+            <p className="text-muted-foreground text-sm">Loading patient guides...</p>
+          </div>
         </div>
       ) : resources.length === 0 ? (
-        <div className="min-h-[300px] flex items-center justify-center border rounded-lg bg-card/50 border-dashed">
-          <div className="text-center">
-            <FileText className="h-12 w-12 text-muted-foreground/40 mx-auto mb-3" />
-            <p className="text-muted-foreground mb-1">No resources yet for {selectedClient?.name || selectedEmail}</p>
-            <p className="text-sm text-muted-foreground/60">Click "Add Resource" to get started</p>
+        <div className="min-h-[300px] flex items-center justify-center border border-dashed rounded-xl bg-muted/5 border-border/80">
+          <div className="text-center p-6">
+            <FileText className="h-12 w-12 text-muted-foreground/30 mx-auto mb-3" />
+            <h4 className="font-semibold text-foreground mb-1">No Materials Created</h4>
+            <p className="text-sm text-muted-foreground mb-4 max-w-sm">No clinical files or guides have been shared with {selectedClient?.name || selectedEmail} yet.</p>
+            <AddResourceDialog
+              clientEmail={selectedEmail}
+              onResourceAdded={fetchResources}
+            />
           </div>
         </div>
       ) : (
         <div className="space-y-6">
-          {/* Stats */}
+          {/* Stats count panel */}
           <div className="grid grid-cols-3 gap-4">
-            <Card className="p-4">
-              <div className="flex items-center gap-2 text-blue-400 mb-1">
+            <Card className="p-4 shadow-sm border border-border/60 bg-gradient-to-br from-blue-500/5 to-transparent relative overflow-hidden">
+              <div className="flex items-center gap-2 text-blue-600 mb-1">
                 <Video className="h-4 w-4" />
-                <span className="text-xs font-medium">Recordings</span>
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Video Guides</span>
               </div>
-              <div className="text-2xl font-bold">{resources.filter(r => r.type === "recording").length}</div>
+              <div className="text-2xl font-extrabold text-foreground">{resources.filter(r => r.type === "recording").length}</div>
             </Card>
-            <Card className="p-4">
-              <div className="flex items-center gap-2 text-amber-400 mb-1">
-                <Target className="h-4 w-4" />
-                <span className="text-xs font-medium">Pointers</span>
+            <Card className="p-4 shadow-sm border border-border/60 bg-gradient-to-br from-amber-500/5 to-transparent relative overflow-hidden">
+              <div className="flex items-center gap-2 text-amber-600 mb-1">
+                <BookOpen className="h-4 w-4" />
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Guidelines</span>
               </div>
-              <div className="text-2xl font-bold">{resources.filter(r => r.type === "pointer").length}</div>
+              <div className="text-2xl font-extrabold text-foreground">{resources.filter(r => r.type === "pointer").length}</div>
             </Card>
-            <Card className="p-4">
-              <div className="flex items-center gap-2 text-emerald-400 mb-1">
+            <Card className="p-4 shadow-sm border border-border/60 bg-gradient-to-br from-emerald-500/5 to-transparent relative overflow-hidden">
+              <div className="flex items-center gap-2 text-emerald-600 mb-1">
                 <FileText className="h-4 w-4" />
-                <span className="text-xs font-medium">Notes</span>
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Prescriptions</span>
               </div>
-              <div className="text-2xl font-bold">{resources.filter(r => r.type === "note").length}</div>
+              <div className="text-2xl font-extrabold text-foreground">{resources.filter(r => r.type === "note").length}</div>
             </Card>
           </div>
 
-          {/* Resource Cards */}
+          {/* Resource Cards by category */}
           {Object.entries(grouped).map(([category, items]) => (
-            <div key={category}>
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+            <div key={category} className="space-y-3">
+              <h3 className="text-xs font-bold text-primary uppercase tracking-widest pl-2.5 border-l-2 border-primary/50 py-0.5">
                 {category}
               </h3>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {items.map((resource, index) => {
                   const globalIndex = resources.indexOf(resource)
                   const thumbnail = resource.type === "recording" && resource.url
@@ -329,77 +359,78 @@ export function ManageResourcesTab() {
                   return (
                     <Card
                       key={resource.id}
-                      className={`p-4 transition-all hover:border-primary/30 ${resource.is_pinned ? "border-primary/40 bg-primary/5" : ""}`}
+                      className={`p-4 transition-all hover:border-primary/20 ${resource.is_pinned ? "border-primary/30 bg-primary/[0.02] shadow-inner" : "border-border/60 bg-card shadow-sm"}`}
                     >
                       <div className="flex items-start gap-4">
-                        {/* Thumbnail or Type Icon */}
+                        {/* Thumbnail or Type Icon Box */}
                         {thumbnail ? (
-                          <div className="hidden sm:block w-24 h-16 rounded-md overflow-hidden flex-shrink-0 border border-border">
+                          <div className="hidden sm:block w-24 h-16 rounded-lg overflow-hidden flex-shrink-0 border border-border shadow-sm">
                             <img src={thumbnail} alt="" className="w-full h-full object-cover" />
                           </div>
                         ) : (
-                          <div className="hidden sm:flex w-10 h-10 rounded-lg bg-muted items-center justify-center flex-shrink-0">
+                          <div className="hidden sm:flex w-12 h-12 rounded-xl bg-muted/60 items-center justify-center flex-shrink-0 border border-border/40">
                             {getTypeIcon(resource.type)}
                           </div>
                         )}
 
-                        {/* Content */}
+                        {/* Text Content */}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1 flex-wrap">
                             {resource.is_pinned && (
-                              <Pin className="h-3 w-3 text-primary flex-shrink-0" />
+                              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 px-1.5 py-0 rounded flex items-center gap-1 text-[9px] font-bold">
+                                <Pin className="h-2.5 w-2.5 fill-primary" />
+                                Pinned
+                              </Badge>
                             )}
-                            <span className="font-semibold text-sm truncate">{resource.title}</span>
-                            <Badge variant="secondary" className={`text-xs ${getTypeBadgeColor(resource.type)}`}>
-                              {resource.type}
-                            </Badge>
+                            <span className="font-semibold text-sm text-foreground tracking-tight truncate">{resource.title}</span>
+                            {getTypeBadge(resource.type)}
                           </div>
                           {resource.description && (
-                            <p className="text-xs text-muted-foreground line-clamp-1">{resource.description}</p>
+                            <p className="text-xs text-muted-foreground line-clamp-1 mb-1">{resource.description}</p>
                           )}
                           {resource.type === "recording" && resource.url && (
                             <a
                               href={resource.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-xs text-primary hover:underline inline-flex items-center gap-1 mt-1"
+                              className="text-xs text-primary hover:underline inline-flex items-center gap-1.5 mt-1 font-medium bg-primary/5 px-2 py-0.5 rounded-full border border-primary/10"
                             >
                               <ExternalLink className="h-3 w-3" />
-                              Open link
+                              Open Video Link
                             </a>
                           )}
                           {(resource.type === "pointer" || resource.type === "note") && resource.content && (
-                            <p className="text-xs text-muted-foreground line-clamp-2 mt-1">{resource.content}</p>
+                            <p className="text-xs text-muted-foreground line-clamp-2 mt-1.5 bg-muted/20 p-2 rounded-lg border border-border/30 whitespace-pre-wrap">{resource.content}</p>
                           )}
                         </div>
 
-                        {/* Actions */}
+                        {/* Actions buttons */}
                         <div className="flex items-center gap-1 flex-shrink-0">
-                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleMoveUp(globalIndex)} disabled={globalIndex === 0}>
-                            <ChevronUp className="h-4 w-4" />
+                          <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted rounded-full" onClick={() => handleMoveUp(globalIndex)} disabled={globalIndex === 0}>
+                            <ChevronUp className="h-4 w-4 text-muted-foreground/80" />
                           </Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleMoveDown(globalIndex)} disabled={globalIndex === resources.length - 1}>
-                            <ChevronDown className="h-4 w-4" />
+                          <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted rounded-full" onClick={() => handleMoveDown(globalIndex)} disabled={globalIndex === resources.length - 1}>
+                            <ChevronDown className="h-4 w-4 text-muted-foreground/80" />
                           </Button>
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                              <Button variant="ghost" size="icon" className="h-8 w-8">
-                                <MoreHorizontal className="h-4 w-4" />
+                              <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted rounded-full">
+                                <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
                               </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuItem onClick={() => setEditingResource(resource)}>
-                                <Edit className="mr-2 h-4 w-4" />
-                                Edit
+                            <DropdownMenuContent align="end" className="w-40">
+                              <DropdownMenuItem onClick={() => setEditingResource(resource)} className="cursor-pointer">
+                                <Edit className="mr-2 h-4 w-4 text-muted-foreground" />
+                                Edit Guide
                               </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => handleTogglePin(resource.id, resource.is_pinned)}>
+                              <DropdownMenuItem onClick={() => handleTogglePin(resource.id, resource.is_pinned)} className="cursor-pointer">
                                 {resource.is_pinned ? (
-                                  <><PinOff className="mr-2 h-4 w-4" /> Unpin</>
+                                  <><PinOff className="mr-2 h-4 w-4 text-muted-foreground" /> Unpin</>
                                 ) : (
-                                  <><Pin className="mr-2 h-4 w-4" /> Pin to Top</>
+                                  <><Pin className="mr-2 h-4 w-4 text-primary fill-primary" /> Pin to Top</>
                                 )}
                               </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => handleDelete(resource.id)} className="text-destructive">
+                              <DropdownMenuItem onClick={() => handleDelete(resource.id)} className="text-destructive cursor-pointer">
                                 <Trash2 className="mr-2 h-4 w-4" />
                                 Delete
                               </DropdownMenuItem>

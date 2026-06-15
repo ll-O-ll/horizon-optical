@@ -190,3 +190,28 @@
     line-height: 1.5;
   }
 }
+
+/* Custom horizontal scrollbar for dashboard tabs */
+.tabs-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--secondary);
+}
+
+.tabs-scrollbar::-webkit-scrollbar {
+  height: 6px; /* Slightly thicker for easier scroll tracking */
+  display: block;
+}
+
+.tabs-scrollbar::-webkit-scrollbar-track {
+  background: var(--secondary);
+  border-radius: 9999px;
+}
+
+.tabs-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 9999px;
+}
+
+.tabs-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary);
+}

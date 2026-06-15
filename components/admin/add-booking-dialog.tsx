@@ -22,7 +22,8 @@ import {
 } from "@/components/ui/select"
 import { toast } from "sonner"
 import { createAdminBooking } from "@/app/actions/dashboard-actions"
-import { fromZonedTime, formatInTimeZone } from "date-fns-tz"
+import { fromZonedTime } from "date-fns-tz"
+import { Plus } from "lucide-react"
 
 const TIMEZONE = "America/New_York"
 
@@ -67,8 +68,6 @@ export function AddBookingDialog({ onBookingAdded }: { onBookingAdded: () => voi
             const startDate = fromZonedTime(startDateTimeStr, TIMEZONE)
             const endDate = fromZonedTime(endDateTimeStr, TIMEZONE)
 
-            // Past appointment validation removed – admins can set past appointments
-
             if (endDate <= startDate) {
                 toast.error("End time must be after start time")
                 setIsLoading(false)
@@ -110,55 +109,56 @@ export function AddBookingDialog({ onBookingAdded }: { onBookingAdded: () => voi
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button size="sm">Add Manual Appointment</Button>
+                <Button size="sm" className="rounded-full shadow-sm bg-primary text-primary-foreground hover:bg-primary/95 gap-2 px-4 h-9 font-medium">
+                    <Plus className="h-4 w-4" /> Add Manual Appointment
+                </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="sm:max-w-[425px] rounded-xl">
                 <form onSubmit={handleSubmit} autoComplete="off">
                     <DialogHeader>
-                        <DialogTitle>Add Manual Appointment</DialogTitle>
+                        <DialogTitle className="font-serif text-lg text-foreground">Add Manual Appointment</DialogTitle>
                         <DialogDescription>
-                            Block out time on your calendar for a client without requiring payment.
+                            Block out time on your calendar for a patient without requiring payment.
                         </DialogDescription>
                     </DialogHeader>
-                    <div className="grid gap-4 py-4">
+                    <div className="grid gap-4 py-4 text-sm">
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="clientName" className="text-right">Name</Label>
-                            <Input id="clientName" name="clientName" value={formData.clientName} onChange={handleInputChange} className="col-span-3" required />
+                            <Label htmlFor="clientName" className="text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">Name</Label>
+                            <Input id="clientName" name="clientName" value={formData.clientName} onChange={handleInputChange} className="col-span-3 rounded-lg h-9 bg-background/50 border-border" required />
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="clientEmail" className="text-right">Email</Label>
-                            <Input id="clientEmail" name="clientEmail" type="email" value={formData.clientEmail} onChange={handleInputChange} className="col-span-3" required />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="clientPhone" className="text-right">Phone</Label>
-                    <Input id="clientPhone" name="clientPhone" type="tel" value={formData.clientPhone} onChange={handleInputChange} className="col-span-3" />
+                            <Label htmlFor="clientEmail" className="text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">Email</Label>
+                            <Input id="clientEmail" name="clientEmail" type="email" value={formData.clientEmail} onChange={handleInputChange} className="col-span-3 rounded-lg h-9 bg-background/50 border-border" required />
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="date" className="text-right">Date</Label>
+                            <Label htmlFor="clientPhone" className="text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">Phone</Label>
+                            <Input id="clientPhone" name="clientPhone" type="tel" value={formData.clientPhone} onChange={handleInputChange} className="col-span-3 rounded-lg h-9 bg-background/50 border-border" placeholder="e.g. 647-555-0199" />
+                        </div>
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label htmlFor="date" className="text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">Date</Label>
                             <Input 
                                 id="date" 
                                 name="date" 
                                 type="date" 
-                                
                                 value={formData.date} 
                                 onChange={handleInputChange} 
-                                className="col-span-3" 
+                                className="col-span-3 rounded-lg h-9 bg-background/50 border-border" 
                                 required 
                             />
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="startTime" className="text-right">Start Time</Label>
-                            <Input id="startTime" name="startTime" type="time" value={formData.startTime} onChange={handleInputChange} className="col-span-3" required />
+                            <Label htmlFor="startTime" className="text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">Start Time</Label>
+                            <Input id="startTime" name="startTime" type="time" value={formData.startTime} onChange={handleInputChange} className="col-span-3 rounded-lg h-9 bg-background/50 border-border" required />
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="endTime" className="text-right">End Time</Label>
-                            <Input id="endTime" name="endTime" type="time" value={formData.endTime} onChange={handleInputChange} className="col-span-3" required />
+                            <Label htmlFor="endTime" className="text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">End Time</Label>
+                            <Input id="endTime" name="endTime" type="time" value={formData.endTime} onChange={handleInputChange} className="col-span-3 rounded-lg h-9 bg-background/50 border-border" required />
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="serviceType" className="text-right">Service</Label>
+                            <Label htmlFor="serviceType" className="text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">Service</Label>
                             <div className="col-span-3">
                                 <Select name="serviceType" value={formData.serviceType} onValueChange={(val) => handleSelectChange('serviceType', val)} required>
-                                    <SelectTrigger>
+                                    <SelectTrigger className="rounded-lg h-9 bg-background/50 border-border">
                                         <SelectValue placeholder="Select service" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -170,10 +170,10 @@ export function AddBookingDialog({ onBookingAdded }: { onBookingAdded: () => voi
                             </div>
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="sessionType" className="text-right">Location</Label>
+                            <Label htmlFor="sessionType" className="text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">Location</Label>
                             <div className="col-span-3">
                                 <Select name="sessionType" value={formData.sessionType} onValueChange={(val) => handleSelectChange('sessionType', val)} required>
-                                    <SelectTrigger>
+                                    <SelectTrigger className="rounded-lg h-9 bg-background/50 border-border">
                                         <SelectValue placeholder="Select location" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -185,7 +185,12 @@ export function AddBookingDialog({ onBookingAdded }: { onBookingAdded: () => voi
                         </div>
                     </div>
                     <DialogFooter>
-                        <Button type="submit" disabled={isLoading}>{isLoading ? "Saving..." : "Save Appointment"}</Button>
+                        <Button variant="outline" type="button" onClick={() => setOpen(false)} disabled={isLoading} className="rounded-full h-9 px-4">
+                            Cancel
+                        </Button>
+                        <Button type="submit" disabled={isLoading} className="rounded-full h-9 px-4 bg-primary text-primary-foreground hover:bg-primary/95">
+                            {isLoading ? "Saving..." : "Save Appointment"}
+                        </Button>
                     </DialogFooter>
                 </form>
             </DialogContent>
