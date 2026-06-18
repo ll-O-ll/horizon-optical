@@ -18,13 +18,11 @@ const fadeInUp = {
 }
 
 const WhatsAppIcon = ({ className }: { className?: string }) => (
-  <svg
-    viewBox="0 0 24 24"
+  <img
+    src="/images/whatsapp.png"
+    alt="WhatsApp Icon"
     className={className}
-    fill="currentColor"
-  >
-    <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.333 4.982L2 22l5.202-1.362a9.92 9.92 0 0 0 4.808 1.239h.005c5.507 0 9.99-4.478 9.99-9.985 0-2.667-1.038-5.176-2.924-7.062A9.917 9.917 0 0 0 12.012 2m0 2.136c2.1 0 4.074.818 5.56 2.302a7.828 7.828 0 0 1 2.3 5.548c0 4.335-3.528 7.86-7.863 7.86a7.809 7.809 0 0 1-4.005-1.1l-.288-.171-2.977.78.794-2.899-.187-.298A7.82 7.82 0 0 1 4.14 11.98c0-4.333 3.528-7.844 7.872-7.844m-3.504 3.093c-.193 0-.323.013-.448.156-.126.142-.486.475-.486 1.157 0 .683.498 1.343.568 1.438.07.095.96 1.543 2.38 2.102.337.133.601.213.805.277.34.102.648.087.892.052.272-.039.837-.341.954-.67.117-.329.117-.61.082-.67-.035-.06-.126-.095-.266-.164-.14-.07-.837-.412-.966-.458-.13-.047-.223-.07-.323.078-.1.149-.387.487-.475.584-.087.097-.175.11-.315.04a3.987 3.987 0 0 1-1.17-.72 4.385 4.385 0 0 1-.81-.998c-.08-.139-.009-.214.06-.283.064-.063.14-.162.21-.242.071-.081.094-.139.14-.233.047-.095.024-.177-.012-.249-.035-.07-.323-.78-.448-1.077-.122-.29-.244-.25-.333-.255" />
-  </svg>
+  />
 )
 
 
@@ -341,7 +339,10 @@ export default function LandingPage() {
         let text = "Closed Today"
 
         if (weekday === "Sun") {
-          text = "Closed Today"
+          text = "Sun: 12:00 PM - 5:00 PM"
+          if (timeFloat >= 12 && timeFloat < 17) {
+            open = true
+          }
         } else if (weekday === "Sat") {
           text = "Sat: 10:00 AM - 5:00 PM"
           if (timeFloat >= 10 && timeFloat < 17) {
@@ -362,7 +363,8 @@ export default function LandingPage() {
         const mins = new Date().getMinutes()
         const timeFloat = hrs + mins / 60
         if (day === 0) {
-          setCurrentHoursText("Closed Today")
+          setCurrentHoursText("Sun: 12:00 PM - 5:00 PM")
+          if (timeFloat >= 12 && timeFloat < 17) setIsOpen(true)
         } else if (day === 6) {
           setCurrentHoursText("Sat: 10:00 AM - 5:00 PM")
           if (timeFloat >= 10 && timeFloat < 17) setIsOpen(true)
@@ -419,13 +421,13 @@ export default function LandingPage() {
               </a>
               <span className="text-border">|</span>
               <a
-                href="https://wa.me/16479496342"
+                href="https://wa.me/19056016342"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1 hover:text-emerald-500 transition-colors text-emerald-600 dark:text-emerald-400 font-medium"
               >
                 <WhatsAppIcon className="h-3.5 w-3.5" />
-                <span>WhatsApp: +1 647 949 6342</span>
+                <span>WhatsApp: +1 905 601 6342</span>
               </a>
             </div>
           </div>
@@ -464,7 +466,7 @@ export default function LandingPage() {
               <div className="hidden md:flex items-center gap-4">
                 <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground font-medium rounded-full px-5 sm:px-6 transition-all duration-300">
                   <Link href="/booking">
-                    Book Appointment
+                    Contact Us
                   </Link>
                 </Button>
               </div>
@@ -523,7 +525,7 @@ export default function LandingPage() {
                 <div className="pt-4 border-t border-border/60">
                   <Button asChild className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-full py-5">
                     <Link href="/booking" onClick={() => setIsMobileMenuOpen(false)}>
-                      Book Appointment
+                      Contact Us
                     </Link>
                   </Button>
                 </div>
@@ -577,7 +579,7 @@ export default function LandingPage() {
               <div className="mt-10 flex flex-col sm:flex-row gap-4">
                 <Button asChild size="lg" className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 text-lg h-12 px-8 shadow-lg shadow-primary/10">
                   <Link href="/booking">
-                    Schedule Exam
+                    Get In Touch
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
@@ -868,7 +870,7 @@ export default function LandingPage() {
                   </li>
                 </ul>
                 <Button asChild variant="outline" className="w-full border-primary/20 hover:bg-primary hover:text-primary-foreground">
-                  <Link href="/booking?type=exam">Book Exam</Link>
+                  <Link href="/booking">Contact Us</Link>
                 </Button>
               </Card>
             </motion.div>
@@ -899,7 +901,7 @@ export default function LandingPage() {
                   </li>
                 </ul>
                 <Button asChild variant="outline" className="w-full border-primary/20 hover:bg-primary hover:text-primary-foreground">
-                  <Link href="/booking?type=lens">Book Fitting</Link>
+                  <Link href="/booking">Contact Us</Link>
                 </Button>
               </Card>
             </motion.div>
@@ -930,7 +932,7 @@ export default function LandingPage() {
                   </li>
                 </ul>
                 <Button asChild variant="outline" className="w-full border-primary/20 hover:bg-primary hover:text-primary-foreground">
-                  <Link href="/booking?type=adjustment">Book Free Slot</Link>
+                  <Link href="/booking">Contact Us</Link>
                 </Button>
               </Card>
             </motion.div>
@@ -1062,7 +1064,7 @@ export default function LandingPage() {
                   </Button>
                   <Button asChild variant="outline" className="rounded-full border-emerald-500/20 text-emerald-600 hover:bg-emerald-500 hover:text-white dark:text-emerald-400 dark:hover:text-black">
                     <a
-                      href="https://wa.me/16479496342"
+                      href="https://wa.me/19056016342"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center"
@@ -1120,31 +1122,77 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-border bg-background px-4">
-        <div className="mx-auto max-w-7xl flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-center md:text-left">
-            <div className="font-serif text-lg font-bold text-primary tracking-wide">
+      <footer className="py-16 border-t border-border bg-background/50 backdrop-blur-sm px-4 font-sans">
+        <div className="mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 pb-12">
+          {/* Column 1: Brand Info (Span 4) */}
+          <div className="md:col-span-4 space-y-4 text-center md:text-left">
+            <div className="font-serif text-2xl font-bold text-primary tracking-wide">
               HORIZON <span className="text-foreground font-sans font-light">OPTICAL</span>
             </div>
-            <p className="text-sm text-muted-foreground mt-2">© {new Date().getFullYear()} Horizon Optical Boutique. All Rights Reserved.</p>
+            <p className="text-sm text-muted-foreground font-light max-w-sm leading-relaxed mx-auto md:mx-0">
+              Curated luxury eyewear and precision clinical optometry. Handcrafted lenses and personalized styling services in Brampton.
+            </p>
+            <div className="flex flex-col items-center md:items-start gap-2.5 pt-2">
+              <a href="https://www.instagram.com/horizonoptical" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                <img src="/images/instagram.png" alt="Instagram Logo" className="h-4 w-4 shrink-0" />
+                <span className="text-xs">@horizonoptical</span>
+              </a>
+              <a href="https://wa.me/19056016342" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-emerald-500 transition-colors">
+                <WhatsAppIcon className="h-4 w-4 shrink-0" />
+                <span className="text-xs">WhatsApp Chat</span>
+              </a>
+            </div>
           </div>
-          <div className="flex gap-8 items-center flex-wrap">
-            <Link href="https://www.instagram.com/" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
-              <span className="text-xs">Instagram</span>
-            </Link>
-            <a
-              href="https://wa.me/16479496342"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-emerald-500 transition-colors"
-            >
-              <WhatsAppIcon className="h-4 w-4 text-emerald-500 shrink-0" />
-              <span className="text-xs">WhatsApp Chat</span>
-            </a>
-            <Link href="mailto:info@horizonoptical.ca" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
-              <Mail className="h-4 w-4" />
-              <span className="hidden sm:inline">Get in Touch</span>
-            </Link>
+
+          {/* Column 2: Quick Links (Span 3) */}
+          <div className="md:col-span-3 space-y-4 text-center md:text-left">
+            <h3 className="text-sm font-semibold tracking-wider uppercase text-foreground">Explore</h3>
+            <ul className="space-y-2.5 text-sm font-light text-muted-foreground">
+              <li>
+                <Link href="/about" className="hover:text-primary transition-colors">About Us</Link>
+              </li>
+              <li>
+                <Link href="/#services" className="hover:text-primary transition-colors">Services</Link>
+              </li>
+              <li>
+                <Link href="/booking" className="hover:text-primary transition-colors">Get In Touch</Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Store Hours Calendar (Span 5) */}
+          <div className="md:col-span-5 space-y-4">
+            <h3 className="text-sm font-semibold tracking-wider uppercase text-primary text-center md:text-left">Clinic Hours</h3>
+            <div className="bg-secondary/20 border border-border/45 rounded-2xl p-4.5 space-y-2 backdrop-blur-sm shadow-sm max-w-md mx-auto md:mx-0">
+              {[
+                { days: "Monday - Friday", hours: "10:30 AM - 7:00 PM", isToday: new Date().getDay() >= 1 && new Date().getDay() <= 5 },
+                { days: "Saturday", hours: "10:00 AM - 5:00 PM", isToday: new Date().getDay() === 6 },
+                { days: "Sunday", hours: "12:00 PM - 5:00 PM", isToday: new Date().getDay() === 0 },
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  className={`flex justify-between items-center gap-4 text-xs px-3.5 py-2 rounded-xl transition-all duration-200 ${
+                    item.isToday
+                      ? "bg-primary/10 border border-primary/20 text-primary font-semibold shadow-sm"
+                      : "text-muted-foreground border border-transparent hover:text-foreground hover:bg-secondary/40"
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    {item.isToday && <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />}
+                    <span>{item.days}</span>
+                  </div>
+                  <span className={item.isToday ? "text-primary font-bold" : "font-light"}>{item.hours}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom copyright block */}
+        <div className="mx-auto max-w-7xl border-t border-border/60 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
+          <p>© {new Date().getFullYear()} Horizon Optical Boutique. All Rights Reserved.</p>
+          <div className="flex gap-4">
+            <Link href="/booking" className="hover:text-primary transition-colors">Contact Us</Link>
           </div>
         </div>
       </footer>

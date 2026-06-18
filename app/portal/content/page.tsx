@@ -306,7 +306,7 @@ export default function PortalContentPage() {
                 We haven't uploaded any eye doctor prescriptions or custom frame orders for your account yet. They will appear here after your first consultation.
               </p>
               <Button asChild variant="outline" className="mt-6 rounded-full border-primary/20 hover:bg-primary hover:text-white">
-                <Link href="/booking">Book Consultation</Link>
+                <Link href="/booking">Contact Us</Link>
               </Button>
             </div>
           </motion.div>
@@ -359,7 +359,7 @@ export default function PortalContentPage() {
             © {new Date().getFullYear()} Horizon Optical Boutique
           </p>
           <div className="flex justify-center gap-4 mt-3">
-            <Link href="/booking" className="text-xs text-primary hover:underline">Book Appointment</Link>
+            <Link href="/booking" className="text-xs text-primary hover:underline">Contact Us</Link>
             <Link href="/" className="text-xs text-muted-foreground hover:text-foreground">Home</Link>
           </div>
         </div>
