@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { motion, AnimatePresence } from "framer-motion"
-import { MapPin, Phone, Mail, Clock, Menu, X, Check, Heart, Sparkles, Shield, ArrowRight } from "lucide-react"
+import { MapPin, Phone, Mail, Clock, Menu, X, Check, Heart, Sparkles, Shield, ArrowRight, Eye, Glasses, Wrench } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -276,70 +276,157 @@ export default function AboutPage() {
         <div className="absolute top-20 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
         <div className="mx-auto max-w-7xl text-center relative z-10">
           <motion.div {...fadeInUp}>
-            <span className="text-xs font-semibold tracking-wider text-primary uppercase">About Us</span>
-            <h1 className="font-serif text-5xl font-bold sm:text-6xl mt-4 text-foreground">
-              Our Story & Philosophy
+            <span className="text-xs font-semibold tracking-wider text-primary uppercase animate-pulse">About Us</span>
+            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold mt-4 text-foreground leading-tight max-w-4xl mx-auto">
+              Dedicated to Clear Vision & Tailored Care
             </h1>
-            <p className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto font-light">
-              Horizon Optical is a boutique vision clinic dedicated to providing Brampton with the perfect harmony of clinical optometry and luxury eyewear styling.
+            <p className="mt-8 text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto font-light">
+              As a family-owned and operated business, Horizon Optical has proudly served our community by helping people see clearly and feel confident in their eyewear. Built on trust, experience, and a commitment to quality, we believe every customer deserves expert advice and care tailored to their individual needs.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Philosophy Section */}
-      <section className="py-24 px-4 bg-background border-b border-border">
-        <div className="mx-auto max-w-4xl text-center">
-          <motion.div {...fadeInUp} className="space-y-8">
-            <h2 className="font-serif text-3xl font-bold sm:text-4xl text-foreground">The Philosophy</h2>
-            <div className="flex justify-center"><div className="h-0.5 w-16 bg-primary rounded"></div></div>
-            <p className="text-xl text-muted-foreground leading-relaxed font-light">
-              We believe glasses are more than just utility. They are a prominent expression of your character and style. By marrying <span className="text-primary font-medium">precision optometry</span> with luxury curated eyewear designers, we provide a sight assessment and aesthetic fitting that ensures you see—and are seen—with absolute clarity.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Vision & Core Pillars Section */}
-      <section className="py-24 px-4 bg-secondary/15">
+      {/* Legacy & Founders Section */}
+      <section className="py-24 px-4 bg-background border-b border-border relative overflow-hidden">
+        <div className="absolute -left-20 bottom-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
         <div className="mx-auto max-w-7xl">
-          <motion.div {...fadeInUp} className="text-center mb-16">
-            <span className="text-xs font-semibold tracking-wider text-primary uppercase">Our Values</span>
-            <h2 className="font-serif text-3xl font-bold sm:text-4xl mt-2 text-foreground">Core Pillars of Care</h2>
-            <div className="flex justify-center mt-3"><div className="h-0.5 w-12 bg-primary rounded"></div></div>
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Left: Decorative Visual Experience Badge */}
+            <motion.div 
+              className="lg:col-span-5 flex justify-center w-full"
+              {...fadeInUp}
+            >
+              <div className="relative w-full max-w-md p-8 sm:p-12 rounded-3xl border border-primary/10 bg-gradient-to-br from-card to-secondary/40 shadow-lg text-center overflow-hidden">
+                <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-2xl"></div>
+                <span className="text-xs font-semibold tracking-widest text-primary uppercase block mb-3">Our Legacy</span>
+                <div className="font-serif text-7xl sm:text-8xl font-bold text-primary tracking-tight">30+</div>
+                <div className="font-serif text-lg sm:text-xl font-medium text-foreground mt-2">Years of Optical Expertise</div>
+                <div className="h-px w-16 bg-primary/20 mx-auto my-6"></div>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-semibold">Craftsmanship & Family Values</p>
+              </div>
+            </motion.div>
+
+            {/* Right: Narrative Text */}
+            <motion.div 
+              className="lg:col-span-7 space-y-6 lg:pl-4"
+              {...fadeInUp}
+            >
+              <span className="text-xs font-semibold tracking-wider text-primary uppercase">Expertise & Trust</span>
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground">
+                Craftsmanship Passed Down
+              </h2>
+              <div className="h-0.5 w-12 bg-primary rounded"></div>
+              
+              <div className="space-y-6 text-base text-muted-foreground leading-relaxed font-light">
+                <p>
+                  Our licensed optician, <span className="text-foreground font-semibold">Kamlesh Bhatt</span>, has over 30 years of optical experience, bringing decades of knowledge and craftsmanship to every patient and customer.
+                </p>
+                <p>
+                  Working alongside his son, <span className="text-foreground font-semibold">Vivek</span>, they combine traditional values with modern optical solutions to create a welcoming experience for individuals and families alike.
+                </p>
+              </div>
+              
+              <div className="pt-4 flex flex-wrap gap-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary/50 border border-border/60">
+                  <Check className="h-3.5 w-3.5 text-primary" />
+                  Licensed Optician
+                </div>
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary/50 border border-border/60">
+                  <Check className="h-3.5 w-3.5 text-primary" />
+                  Family Operated
+                </div>
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary/50 border border-border/60">
+                  <Check className="h-3.5 w-3.5 text-primary" />
+                  30+ Years Experience
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services and Support Section */}
+      <section className="py-24 px-4 bg-secondary/15 border-b border-border">
+        <div className="mx-auto max-w-7xl">
+          <motion.div {...fadeInUp} className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-xs font-semibold tracking-wider text-primary uppercase">Our Offerings</span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold mt-2 text-foreground">
+              Tailored Options For You
+            </h2>
+            <div className="flex justify-center mt-3 mb-6"><div className="h-0.5 w-12 bg-primary rounded"></div></div>
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed font-light">
+              Whether you're visiting us for a comprehensive eye exam, searching for the perfect pair of glasses, exploring contact lens options, or in need of repairs and adjustments to your existing eyewear, our team is here to help. We take the time to understand your vision needs, answer your questions, and ensure you leave with products and solutions that fit your lifestyle.
+            </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <Card className="p-8 border-border bg-card shadow-sm hover:border-primary/40 transition-colors flex flex-col items-center text-center">
-              <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {[
+              {
+                title: "Eye Exams",
+                desc: "Comprehensive check-ups to assess visual acuity and overall ocular health.",
+                icon: Eye
+              },
+              {
+                title: "Perfect Glasses",
+                desc: "Find custom prescription glasses that match your profile and visual preferences.",
+                icon: Glasses
+              },
+              {
+                title: "Contact Lenses",
+                desc: "Specialized options fitted correctly to match your style and needs.",
+                icon: Heart
+              },
+              {
+                title: "Repairs & Care",
+                desc: "Attentive support for frame alignment, repair, and ongoing maintenance.",
+                icon: Wrench
+              }
+            ].map((item, index) => (
+              <Card key={index} className="p-6 border-border bg-card shadow-sm hover:border-primary/40 transition-colors flex flex-col h-full">
+                <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4 shrink-0">
+                  <item.icon className="h-5 w-5" />
+                </div>
+                <h3 className="font-serif text-lg font-bold text-foreground mb-2">{item.title}</h3>
+                <p className="text-muted-foreground text-xs leading-relaxed font-light">
+                  {item.desc}
+                </p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Quality of Life Commitment Section */}
+      <section className="py-24 px-4 bg-background border-b border-border">
+        <div className="mx-auto max-w-4xl">
+          <motion.div {...fadeInUp}>
+            <div className="relative p-8 sm:p-12 md:p-16 rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/5 via-secondary/10 to-card shadow-md text-center overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/20 via-primary to-primary/20"></div>
+              
+              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mx-auto mb-6">
                 <Sparkles className="h-6 w-6" />
               </div>
-              <h3 className="font-serif text-xl font-bold text-foreground mb-3">Aesthetic Integrity</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed font-light">
-                We select designer frame shapes, silhouettes, and premium materials that complement individual features and celebrate personal style.
+              
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-6">Our Commitment</h2>
+              
+              <p className="text-lg md:text-xl text-foreground font-light leading-relaxed max-w-2xl mx-auto font-serif italic">
+                "At Horizon Optical, we know that clear vision is about more than just seeing well, it’s about improving your quality of life. That’s why we focus on providing honest recommendations, quality products, and attentive customer service in a comfortable manner, family-friendly environment."
               </p>
-            </Card>
-
-            <Card className="p-8 border-border bg-card shadow-sm hover:border-primary/40 transition-colors flex flex-col items-center text-center">
-              <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6">
-                <Shield className="h-6 w-6" />
+              
+              <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm font-medium text-muted-foreground">
+                <span className="flex items-center gap-2">
+                  <Check className="h-4 w-4 text-primary" /> Honest Recommendations
+                </span>
+                <span className="flex items-center gap-2">
+                  <Check className="h-4 w-4 text-primary" /> Quality Products
+                </span>
+                <span className="flex items-center gap-2">
+                  <Check className="h-4 w-4 text-primary" /> Attentive Service
+                </span>
               </div>
-              <h3 className="font-serif text-xl font-bold text-foreground mb-3">Precision Clinical Optometry</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed font-light">
-                Utilizing state-of-the-art diagnostic vision technology, our optometrists ensure absolute measurement accuracy and comprehensive eye health assessments.
-              </p>
-            </Card>
-
-            <Card className="p-8 border-border bg-card shadow-sm hover:border-primary/40 transition-colors flex flex-col items-center text-center">
-              <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6">
-                <Heart className="h-6 w-6" />
-              </div>
-              <h3 className="font-serif text-xl font-bold text-foreground mb-3">Community First Care</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed font-light">
-                As a family-oriented boutique in Brampton, we prioritize direct billing support, personalized guidance, and lifetime adjustment services for all patient visits.
-              </p>
-            </Card>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
